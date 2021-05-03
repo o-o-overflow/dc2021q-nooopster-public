@@ -1,0 +1,10 @@
+#undef DEBUG
+#undef EMAIL
+#undef FD_SETSIZE
+#undef HAVE_SOCKLEN_T
+#undef LOG_CHANNEL
+#undef RESUME
+#undef ROUTING_ONLY
+#undef USE_CHROOT
+#undef USE_GID
+#undef USE_UID

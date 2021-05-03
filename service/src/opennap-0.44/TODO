@@ -1,0 +1,19 @@
+* add a timeout to check for blocked server connect() call
+
+* desync between servers can happen if a +REGISTERED channel is created on a
+  split server which contains no users on the other side of the split.
+  currently the channel has to exist for the mode to be changed, so the
+  +REGISTERED sent upon link will get dropped.  this is easy to fix as all
+  you have to do is reset the REGISTERED bit on the server after it is
+  relinked, but is there a better way to handle this case?
+
+* fix memory leak with routing-only server
+
+* throttle searches to lagging servers
+
+* revise fast_snprintf()
+
+* add MSG_SERVER_SYNC_END so that server's know when they are completely
+  synced with each other, and can begin sending remote search requests
+
+* still having cpu use problems with -DHAVE_POLL=1 !!!

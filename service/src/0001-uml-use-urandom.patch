@@ -1,0 +1,11 @@
+--- linux-5.11.15-clean/arch/um/drivers/random.c	2021-04-16 02:38:15.000000000 -0700
++++ linux-5.11.15/arch/um/drivers/random.c	2021-04-27 19:39:20.186190092 -0700
+@@ -69,7 +69,7 @@
+ {
+ 	int err;
+ 
+-	err = os_open_file("/dev/random", of_read(OPENFLAGS()), 0);
++	err = os_open_file("/dev/urandom", of_read(OPENFLAGS()), 0);
+ 	if (err < 0)
+ 		goto out;
+ 

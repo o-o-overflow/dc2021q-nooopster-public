@@ -1,0 +1,105 @@
+dnl $Id: configure.in,v 1.88 2001/09/29 05:21:51 drscholl Exp $
+AC_INIT(opennap.h)
+AM_INIT_AUTOMAKE(opennap,0.44)
+AM_CONFIG_HEADER(config.h)
+AM_MAINTAINER_MODE
+AM_PROG_CC_STDC
+AC_HEADER_STDC
+AC_CHECK_HEADERS(unistd.h)
+AC_MSG_CHECKING(for socklen_t)
+AC_EGREP_HEADER(socklen_t, /usr/include/sys/socket.h,
+	[AC_MSG_RESULT(yes)
+	AC_DEFINE(HAVE_SOCKLEN_T)],
+	[AC_MSG_RESULT(no)])
+AC_C_BIGENDIAN
+AC_CHECK_SIZEOF(long)
+AC_REPLACE_FUNCS(getopt)
+AC_CHECK_FUNCS(regcomp alarm syslog)
+
+dnl check for zlib installed in /usr/local
+if test -f /usr/local/lib/libz.a; then
+	LIBS="$LIBS -L/usr/local/lib -lz"
+	CFLAGS="$CFLAGS -I/usr/local/include"
+else
+AC_CHECK_LIB(z, compress2,[LIBS="$LIBS -lz"],
+	[AC_MSG_ERROR(you must install zlib first)])
+fi
+
+AC_CHECK_LIB(xnet,gethostbyname)
+AC_CHECK_LIB(nsl,socket)
+AC_CHECK_LIB(socket,gethostbyname)
+AC_CHECK_FUNCS(mlockall poll)
+
+dnl see if we are compiling under Win32 or Unix
+AC_MSG_CHECKING(for default config directory)
+AC_EGREP_CPP(yes,
+	[#if __CYGWIN__
+		yes
+	#endif],
+	[SHAREDIR=//c/opennap
+	AC_DEFINE(FD_SETSIZE,1024)
+	REGEX=regex.o
+	AC_SUBST(REGEX)],
+	[SHAREDIR=\${pkgdatadir}])
+AC_SUBST(SHAREDIR)
+AC_MSG_RESULT($SHAREDIR)
+
+ac_cv_warnings=yes
+AC_ARG_ENABLE(warnings, [  --disable-warnings	Turn of GCC compiler warnings ],
+	[ac_cv_warnings=$enableval])
+if test $ac_cv_warnings != "no"; then
+	CFLAGS="-W -Wall -Wmissing-prototypes -Wcast-align -pedantic $CFLAGS"
+fi
+
+AC_ARG_ENABLE(debug, [  --enable-debug	Turn on memory debugging code],
+	[if test $enableval = yes; then
+		AC_DEFINE(DEBUG)
+	fi])
+
+AC_ARG_WITH(fd-setsize,
+	[  --with-fd-setsize=N	Set max connections with select() to N],
+	[AC_DEFINE_UNQUOTED(FD_SETSIZE,$withval)])
+
+dnl support for resume is now turned off by default
+AC_ARG_ENABLE(resume, [  --enable-resume	Turn on support for resume],
+	[if test $enableval = yes; then
+		AC_DEFINE(RESUME)
+	fi])
+
+dnl support for saving email address is turned off by default
+AC_ARG_ENABLE(email,
+	[  --enable-email	Turn on support for saving client email addresses],
+	[if test $enableval = yes; then
+		AC_DEFINE(EMAIL)
+	fi])
+
+AC_ARG_ENABLE(gprof, [  --enable-gprof	Use -pg with gcc to generate profiling data],
+	[if test $enableval = yes; then
+		CFLAGS="$CFLAGS -pg"
+	fi])
+
+AC_MSG_CHECKING(whether running as a router)
+AC_ARG_ENABLE(router, [  --enable-router	Compile routing-only server (used as a hub only)],
+	[AC_DEFINE(ROUTING_ONLY)
+	AC_MSG_RESULT(yes)],
+	[AC_MSG_RESULT(no)])
+
+AC_ARG_ENABLE(log-channel, [  --enable-log-channel	log console messages to channel \&LOG],
+	[AC_DEFINE(LOG_CHANNEL)])
+
+AC_MSG_CHECKING(whether to run chrooted)
+AC_ARG_ENABLE(chroot, [  --enable-chroot	Run opennap chrooted],
+	[if test $enableval = yes; then
+		AC_DEFINE(USE_CHROOT)
+		AC_MSG_RESULT(yes)
+	fi],
+	[AC_MSG_RESULT(no)])
+
+AC_ARG_WITH(uid, [  --with-uid=UID	Switch to UID if run as root],
+	[AC_DEFINE_UNQUOTED(USE_UID,"$withval")],
+	[AC_DEFINE_UNQUOTED(USE_UID,"nobody")])
+AC_ARG_WITH(gid, [  --with-gid=GID	Switch to GID if run as root],
+	[AC_DEFINE_UNQUOTED(USE_GID,"$withval")],
+	[AC_DEFINE_UNQUOTED(USE_GID,"nobody")])
+
+AC_OUTPUT(Makefile)

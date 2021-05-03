@@ -1,0 +1,29 @@
+# list of files to block from sharing.  each line is an extended regular expression.
+# case is ignored.
+#
+# sources:
+#  -were banned from napster.com
+#  -named in the riaa's letter to opennap servers
+#  -from http://www.artistsagainstpiracy.com/artists/index.html
+a(.*perfect.*circle|erosmith|imee.*mann|lanis.*morissette|my.*correia)
+b(arenaked.*ladies|if.*naked|link.*182|on.*jovi|ryan.*adams|yrds|ad.*religion)
+c(eline.*dion|hristina.*aguilera|racker)
+d(epeche.*mode|avid.*(marks|mead|sanborn)|c.*talk|enyce.*graves|ixie.*chicks|mx|wight.*yoakam|r.*dre)
+e(rykah.*badu|agle.*eye.*cherry|illis.*paul|verclear)
+f(aith.*hill|enix|ilter|isher)
+g(odsmack|arth.*brooks|ary.*allan|eorge.*strait|rant.*lee.*phillips)
+h(al.*ketchum|anson|erbie.*hancock|ootie.*blowfish)
+innosense
+j(azzyfatnastees|eff.*buckley|ill.*scott|onatha.*brooke|immie.*chicken.*shack|oe.*sample)
+k(id.*rock|enny.*chesney|ent)
+l(ee.*ann.*womack|onestar|ords.*of.*acid|orrie.*morgan|ou.*bega|yle.*workman)
+m(akaila|artina.*mcbride|atchbox.*twenty|atthew.*ryan|elissa.*ferrick|eredith.*brooks|ichael.*penn|os.*def|ariah.*carey|atchbox.*twenty|etallica|acy.*gray)
+n(atilie.*imbruglia|anci.*griffith|eneh.*cherry|elly)
+outkast
+p(rimer.*55|rodigy|ush.*stars)
+queen
+r(icky.*martin|obbie.*williams|adford|eba.*mcentire|elative.*ash|onnie.*milsap|oots|oy.*orbison)
+s(aliva|arah.*(brightman|mclachlan)|helby.*lynne|heryl.*crow|ick.*of.*it.*all|isqo|ting|noop.*dog|haggy)
+t(al.*bachman|hey.*might.*be.*giants|im.*mcraw|race.*adkins|rinket|urtles)
+us3
+v(ertical.*horizon|ictoria.*shaw|ince.*gill)

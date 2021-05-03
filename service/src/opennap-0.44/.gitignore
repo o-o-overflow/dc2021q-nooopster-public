@@ -1,0 +1,10 @@
+Makefile
+*.o
+config.status
+config.log
+config.cache
+metaserver
+opennap
+setup
+config.h
+stamp-h
